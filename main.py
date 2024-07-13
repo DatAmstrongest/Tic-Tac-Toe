@@ -79,7 +79,9 @@ def check_diag():
     else:
         result = True
         for i in range(1,HEIGHT):
-            if GAME_MATRIX[i-1][HEIGHT-i-2] == GAME_MATRIX[i][HEIGHT-i-1] or GAME_MATRIX[i][HEIGHT-i-1] == '':
+            row = HEIGHT-i-1
+            col = i
+            if GAME_MATRIX[row+1][col-1] != GAME_MATRIX[row][col] or GAME_MATRIX[row][col]=='':
                 result = False
         if result:
             return True
@@ -96,6 +98,15 @@ def win_condition():
         messagebox.showinfo("showinfo", "Player 1 Won")
     else:
         messagebox.showinfo("showinfo", "Player 2 Won")
+    restart_game()
+
+
+def restart_game():
+    global GAME_MATRIX
+    GAME_MATRIX = [['']*WIDTH for _ in range(HEIGHT)]
+    for button in BUTTON_LIST:
+        button.configure(image = WHITE)
+        button["state"] = "active"
 
 
 Grid.rowconfigure(window,0,weight=1)
